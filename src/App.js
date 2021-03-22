@@ -79,7 +79,8 @@ export default class App extends Component {
   render() {
     const { gallery, isLoading, largeImageURL, error, showModal } = this.state;
     const { toggleModal, onModalImg } = this;
-    const renderLoadMoreButton = gallery.length > 0 && !isLoading;
+    const galleryLength = 0 > gallery.length > gallery.total;
+    const renderLoadMoreButton = galleryLength && !isLoading;
 
     return (
       <div className="App">
