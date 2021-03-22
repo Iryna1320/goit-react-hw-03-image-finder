@@ -44,7 +44,7 @@ export default class App extends Component {
     pixabayApi
       .getFetchGallery(options)
       .then(data => {
-        if (data.length === 0) {
+        if (data.hits.length === 0) {
           alert(`Please, try again...`);
           return;
         } else {
