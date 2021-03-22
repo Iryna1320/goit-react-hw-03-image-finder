@@ -16,9 +16,8 @@ export default class App extends Component {
     showModal: false,
     largeImageURL: '',
     error: null,
+    total: null,
   };
-
-  componentDidMount() {}
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchgQuery !== this.state.searchgQuery) {
@@ -32,8 +31,8 @@ export default class App extends Component {
       page: 1,
       gallery: [],
       error: null,
+      total: null,
     });
-    // this.fetchGallery();
   };
 
   fetchGallery = () => {
@@ -50,8 +49,9 @@ export default class App extends Component {
           return;
         } else {
           this.setState(prevState => ({
-            gallery: [...prevState.gallery, ...data],
+            gallery: [...prevState.gallery, ...data.hits],
             page: prevState.page + 1,
+            total: data.total,
           }));
         }
         window.scrollTo({
@@ -77,9 +77,9 @@ export default class App extends Component {
   };
 
   render() {
-    const { gallery, isLoading, largeImageURL, error, showModal } = this.state;
+    const { gallery, isLoading, largeImageURL, error, showModal, total } = this.state;
     const { toggleModal, onModalImg } = this;
-    const galleryLength = 0 > gallery.length > gallery.total;
+    const galleryLength = gallery.length > 0 && gallery.length < total;
     const renderLoadMoreButton = galleryLength && !isLoading;
 
     return (
